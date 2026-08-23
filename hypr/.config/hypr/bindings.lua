@@ -49,3 +49,37 @@ o.bind("SUPER + SHIFT + S", "Music", { omarchy = "spotify" })
 -- Kill active window on SHIFT+W.
 hl.unbind("SUPER + SHIFT + W") -- was: Omawrite
 o.bind("SUPER + SHIFT + W", nil, hl.dsp.window.close())
+
+-- Zoom in/out on the omarchy zoom level (cursor zoom factor).
+-- Note: SUPER+CTRL+MINUS was previously bound to "Expand window left a lot"
+-- and SUPER+CTRL+EQUAL to "Shrink window left a lot".
+hl.unbind("SUPER + CTRL + MINUS")
+hl.unbind("SUPER + CTRL + EQUAL")
+o.bind("SUPER + CTRL + MINUS", "Zoom out", function()
+  local zoom = hl.get_config("cursor.zoom_factor") or 1
+  hl.config({ cursor = { zoom_factor = math.max(1, zoom - 1) } })
+end)
+o.bind("SUPER + CTRL + EQUAL", "Zoom in", function()
+  local zoom = hl.get_config("cursor.zoom_factor") or 1
+  hl.config({ cursor = { zoom_factor = zoom + 1 } })
+end)
+
+-- Remove monitor scaling shortcuts so they can't be hit accidentally.
+hl.unbind("SUPER + SLASH") -- was: Monitor scaling up
+hl.unbind("SUPER + ALT + SLASH") -- was: Monitor scaling down
+
+-- Switch to workspaces 1-5 on l/u/y/æ/å.
+hl.unbind("SUPER + L") -- was: Toggle workspace layout
+o.bind("SUPER + L", "Switch to workspace 1", hl.dsp.focus({ workspace = "1" }))
+o.bind("SUPER + U", "Switch to workspace 2", hl.dsp.focus({ workspace = "2" }))
+o.bind("SUPER + Y", "Switch to workspace 3", hl.dsp.focus({ workspace = "3" }))
+o.bind("SUPER + AE", "Switch to workspace 4", hl.dsp.focus({ workspace = "4" }))
+o.bind("SUPER + ARING", "Switch to workspace 5", hl.dsp.focus({ workspace = "5" }))
+
+-- Move focused window to workspaces 1-5 on shift+l/u/y/æ/å.
+hl.unbind("SUPER + SHIFT + Y") -- was: YouTube
+o.bind("SUPER + SHIFT + L", "Move window to workspace 1", hl.dsp.window.move({ workspace = "1" }))
+o.bind("SUPER + SHIFT + U", "Move window to workspace 2", hl.dsp.window.move({ workspace = "2" }))
+o.bind("SUPER + SHIFT + Y", "Move window to workspace 3", hl.dsp.window.move({ workspace = "3" }))
+o.bind("SUPER + SHIFT + AE", "Move window to workspace 4", hl.dsp.window.move({ workspace = "4" }))
+o.bind("SUPER + SHIFT + ARING", "Move window to workspace 5", hl.dsp.window.move({ workspace = "5" }))
